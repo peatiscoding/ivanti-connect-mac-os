@@ -34,19 +34,3 @@ Output messages:
 
 Edit the `connectionName` property at the top of `auto-connect.applescript` to match your Ivanti connection profile name (default: `TrueID-Web`).
 
-### Individual scripts
-
-```bash
-# Click Connect button only
-osascript connect.applescript
-
-# Fill TOTP code only (when dialog is already open)
-osascript fill-totp.applescript <TOTP_CODE>
-```
-
-### Debug / inspect UI hierarchy
-
-```bash
-osascript inspect.applescript          # main window elements
-osascript inspect-totp.applescript     # TOTP auth sheet elements
-```

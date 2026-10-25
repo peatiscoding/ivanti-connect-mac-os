@@ -3,13 +3,16 @@
 -- Orchestrates full Ivanti VPN connection: checks state, clicks Connect,
 -- waits for TOTP dialog, fills code, and verifies connection success.
 
+-- Connection profile name (change this to match your Ivanti connection)
+property connectionName : "TrueID-Web"
+
 on dismissUpgradeDialog()
 	-- Wait briefly for upgrade dialog to appear, then cancel it
 	delay 2
 	try
 		tell application "System Events"
 			tell process "Ivanti Secure Access"
-				click (first button of sheet 1 of window "TrueID-Web" whose name is "Cancel")
+				click (first button of sheet 1 of window connectionName whose name is "Cancel")
 			end tell
 		end tell
 	end try
@@ -61,7 +64,7 @@ on run argv
 		try
 			tell application "System Events"
 				tell process "Ivanti Secure Access"
-					set s to sheet 1 of window "TrueID-Web"
+					set s to sheet 1 of window connectionName
 					-- Verify the secure text field exists
 					set tokenField to first text field of s whose description is "secure text field"
 					set sheetReady to true
@@ -79,7 +82,7 @@ on run argv
 	-- Step 4: Fill TOTP and click Connect
 	tell application "System Events"
 		tell process "Ivanti Secure Access"
-			set authSheet to sheet 1 of window "TrueID-Web"
+			set authSheet to sheet 1 of window connectionName
 			set tokenField to first text field of authSheet whose description is "secure text field"
 			set value of tokenField to totpCode
 			click (first button of authSheet whose name is "Connect")
